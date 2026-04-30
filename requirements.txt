@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+scikit-learn
+nltk
+feedparser
+newspaper3k
+wordcloud
+matplotlib
+lxml
