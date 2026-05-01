@@ -32,8 +32,8 @@ Analyze real-world articles and extract:
 # -----------------------
 # NLTK SETUP
 # -----------------------
-nltk.download('stopwords')
-nltk.download('vader_lexicon')
+nltk.download('stopwords', quiet=True)
+nltk.download('vader_lexicon', quiet=True)
 
 custom_stopwords = {
     "india","indian","market","markets","report","said","also",
