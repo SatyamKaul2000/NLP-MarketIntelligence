@@ -26,7 +26,10 @@ Analyze real-world articles and extract:
 - 📉 Sentiment analysis  
 - ☁️ Word clouds (1 → 5 word patterns)
 
-👉 Go for it !!!
+👉 Try:
+- healthy snacking trends India  
+- electric vehicles future  
+- AI in healthcare  
 """)
 
 # -----------------------
@@ -44,9 +47,10 @@ stop_words = set(stopwords.words('english')).union(custom_stopwords)
 sia = SentimentIntensityAnalyzer()
 
 # -----------------------
-# FETCH ARTICLES
+# FETCH ARTICLES (CACHED)
 # -----------------------
-def fetch_articles(query, max_articles=12):
+@st.cache_data(show_spinner=False)
+def fetch_articles(query, max_articles=8):  # reduced from 12 → 8
     url = f"https://news.google.com/rss/search?q={query.replace(' ', '+')}"
     feed = feedparser.parse(url)
 
@@ -163,7 +167,7 @@ def generate_ngram_text(df, n):
 
     words = []
     for p, c in zip(phrases, counts):
-        phrase = p.replace(" ", "_")  # FIX
+        phrase = p.replace(" ", "_")
         words.extend([phrase] * int(c))
 
     return " ".join(words)
@@ -217,10 +221,6 @@ if st.button("Run Analysis"):
                 medium = get_ngrams(df,3)
                 long = get_ngrams(df,4)
 
-        # -----------------------
-        # OUTPUT
-        # -----------------------
-
         st.success("✅ Analysis Complete")
 
         st.subheader("📰 Source Articles")
@@ -238,9 +238,6 @@ if st.button("Run Analysis"):
         st.write("Medium (3-word):", list(medium))
         st.write("Long (4-word):", list(long))
 
-        # -----------------------
-        # WORD CLOUDS
-        # -----------------------
         st.subheader("☁️ Word Cloud Analysis (1 → 5 grams)")
 
         for n in range(1,6):
